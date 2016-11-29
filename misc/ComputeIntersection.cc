@@ -71,7 +71,7 @@ int main()
 		if (sgn(CalcArea(A,N)) != sgn(CalcArea(B,M))) {
 			reverse(B, B + M);
 		}
-        printf("%.2f\n", Area(N,A)+Area(M,B)-SPIA(A,B,N,M));
+        printf("%.2f\n", SPIA(A,B,N,M));
     }
     fclose(stdin);
     fclose(stdout);
