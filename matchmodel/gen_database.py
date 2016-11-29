@@ -7,8 +7,8 @@ import json
 
 caffe.set_mode_gpu()
 img_file = '/mnt/sda/backup/streetview45/dbdata/%d.jpg'
-model  = '/home/hyshi/exp/matchmodel/deploy.prototxt'
-weights = '/mnt/sda/backup/match/model_iter_200000.caffemodel'
+model  = '/home/hyshi/jointmodel/matchmodel/deploy.prototxt'
+weights = '/mnt/sda/backup/match/model_iter_100000.caffemodel'
 db_filename = '/mnt/sda/backup/match/database.json'
 net = caffe.Net(model, weights, caffe.TEST)
 

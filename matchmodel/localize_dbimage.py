@@ -10,7 +10,8 @@ from numpy import matlib as mt
 
 ###
 # Result: 
-#   fine-tuned: 4231
+#   fine-tuned: 4258
+#   original: 4253
 ###
 
 caffe.set_mode_gpu()
@@ -24,7 +25,8 @@ def CalcDist(x):
 
 '''
 fout = open(dist_filename, 'w')
-for line in open(db_filename):
+fin = open(db_filename)
+for line in fin:
   vector = json.loads(line)
   vectors.append(vector)
 mat = np.matrix(vectors)
@@ -33,7 +35,7 @@ for idx in range(image_num):
   dist_vector = map(CalcDist, delta)
   fout.write(json.dumps(dist_vector) + '\n')
   print idx
-
+fin.close()
 fout.close()
 '''
 
