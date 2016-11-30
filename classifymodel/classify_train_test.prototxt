@@ -15,7 +15,7 @@ layer {
     source: "/mnt/sda/backup/data/salient_database/groundtruth.txt"
     new_height: 224
     new_width: 224
-    batch_size: 16
+    batch_size: 8
   }
 }
 layer {
