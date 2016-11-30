@@ -8,15 +8,13 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    scale: 0.00390625    
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/infolabel/pair_info/train_step2_a.info"
-    mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
+    source: "/mnt/sda/backup/data/salient_database/groundtruth.txt"
     new_height: 224
     new_width: 224
-    batch_size: 5
+    batch_size: 8
   }
 }
 layer {
@@ -28,14 +26,13 @@ layer {
     phase: TEST
   }
   transform_param {
-    scale: 0.00390625    
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/infolabel/pair_info/train_ta.info"
+    source: "/mnt/sda/backup/data/salient_database/val.txt"
     new_height: 224
     new_width: 224
-    batch_size: 2
+    batch_size: 29
   }
 }
 layer {
@@ -291,7 +288,7 @@ layer {
   name: "fc8_new"
   type: "InnerProduct"
   inner_product_param {
-    num_output: 2
+    num_output: 3
   }
 }
 layer {
@@ -311,4 +308,3 @@ layer {
     phase: TEST
   }
 }
-

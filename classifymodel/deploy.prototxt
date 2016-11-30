@@ -202,12 +202,12 @@ layer {
   name: "fc8_new"
   type: "InnerProduct"
   inner_product_param {
-    num_output: 2
+    num_output: 3
   }
 }
 layer {
   bottom: "fc8_new"
-  top: "loss"
-  name: "loss"
+  name: "prob"
+  top: "prob"
   type: "Softmax"
 }

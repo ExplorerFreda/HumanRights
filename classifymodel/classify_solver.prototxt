@@ -1,15 +1,15 @@
 net: "classify_train_test.prototxt"
-test_iter: 30
+test_iter: 4
 test_interval: 50
-base_lr: 1e-6
+base_lr: 2e-4
 momentum: 0.9
 weight_decay: 0.00001
 lr_policy: "step"
-gamma: 0.1
-stepsize: 2000
+gamma: 0.5
+stepsize: 1000
 display: 50
-max_iter: 10000
-snapshot: 5000
-snapshot_prefix: "/mnt/sda/backup/classify/model_step2"
+max_iter: 5000
+snapshot: 200
+snapshot_prefix: "/mnt/sda/backup/classify/model"
 solver_mode: GPU
 
