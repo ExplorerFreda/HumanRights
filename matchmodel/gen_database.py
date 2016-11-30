@@ -6,9 +6,11 @@ import numpy as np
 import json
 
 caffe.set_mode_gpu()
-img_file = '/mnt/sda/backup/streetview45/dbdata/%d.jpg'
+image_num = 1600
+img_file = '/mnt/sda/backup/data/database/%d.jpg'
 model  = '/home/hyshi/jointmodel/matchmodel/deploy.prototxt'
-weights = '/mnt/sda/backup/match/model_iter_100000.caffemodel'
+weights = '/mnt/sda/backup/45degree/model/VGG_CNN_M.caffemodel'
+# weights = '/mnt/sda/backup/match/model_iter_100000.caffemodel'
 db_filename = '/mnt/sda/backup/match/database.json'
 net = caffe.Net(model, weights, caffe.TEST)
 
@@ -19,7 +21,7 @@ transformer.set_transpose('data',(2,0,1))
 
 
 fout = open(db_filename, 'w')
-for idx in range(10000):
+for idx in range(image_num):
   image = caffe.io.load_image(img_file%idx)
   net.blobs['data'].data[...] = transformer.preprocess('data', image)
   out = net.forward()
