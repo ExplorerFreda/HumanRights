@@ -76,7 +76,7 @@ for item in list:
 		else:
 		    area_label = 2
 		new_filename = new_img_dir + str(cnt) + '.jpg'
-		gout.write(new_filename + ' ' + str(area_label) + '\n')
+		gout.write(new_filename + ' ' + str(area_rate) + '\n')
 		out.save(new_filename)
 		cnt += 1
     print item, cnt

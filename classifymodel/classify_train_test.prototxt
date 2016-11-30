@@ -189,11 +189,11 @@ layer {
   type: "Convolution"
   param {
     name: "conv5_w"
-    lr_mult: 0
+    lr_mult: 1
   }
   param {
     name: "conv5_b"
-    lr_mult: 0
+    lr_mult: 2
   }
   convolution_param {
     num_output: 512
@@ -296,7 +296,7 @@ layer {
   bottom: "label"
   top: "loss"
   name: "loss"
-  type: "SoftmaxWithLoss"
+   type: "SoftmaxWithLoss"
 }
 layer {
   name: "accuracy"
