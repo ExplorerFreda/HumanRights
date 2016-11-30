@@ -12,11 +12,10 @@ layer {
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/infolabel/pair_info/train_step2_a.info"
-    mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
+    source: "/mnt/sda/backup/data/salient_database/groundtruth.txt"
     new_height: 224
     new_width: 224
-    batch_size: 5
+    batch_size: 16
   }
 }
 layer {
@@ -32,10 +31,10 @@ layer {
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/infolabel/pair_info/train_ta.info"
+    source: "/mnt/sda/backup/data/salient_database/val.txt"
     new_height: 224
     new_width: 224
-    batch_size: 2
+    batch_size: 29
   }
 }
 layer {
@@ -192,11 +191,11 @@ layer {
   type: "Convolution"
   param {
     name: "conv5_w"
-    lr_mult: 0
+    lr_mult: 1
   }
   param {
     name: "conv5_b"
-    lr_mult: 0
+    lr_mult: 2
   }
   convolution_param {
     num_output: 512
@@ -291,7 +290,7 @@ layer {
   name: "fc8_new"
   type: "InnerProduct"
   inner_product_param {
-    num_output: 2
+    num_output: 1
   }
 }
 layer {
@@ -299,16 +298,5 @@ layer {
   bottom: "label"
   top: "loss"
   name: "loss"
-  type: "SoftmaxWithLoss"
+  type: "EuclideanLoss"
 }
-layer {
-  name: "accuracy"
-  type: "Accuracy"
-  bottom: "fc8_new"
-  bottom: "label"
-  top: "accuracy"
-  include {
-    phase: TEST
-  }
-}
-
