@@ -13,8 +13,8 @@ from numpy import matlib as mt
 
 ###
 # Result: 
-#   fine-tuned: 
-#   original:  452/1600 = 0.2825
+#   fine-tuned: 0.730625
+#   original:  0.594375
 ###
 
 
@@ -45,12 +45,14 @@ for line in open(test_groundtruth_filename):
   dist_info = map(CalcDist, delta)
   dist_info = [(dist_info[i], i) for i in range(image_num)]
   dist_info = sorted(dist_info, key=lambda x:x[0])
-  loc_idx = location(idx)
-  for item in dist_info[1:6]:
+  loc_idx = location(location_groundtruth)
+  for item in dist_info[0:5]:
     loc_idy = location(item[1])
     d = max(abs(loc_idx[0] - loc_idy[0]),abs(loc_idx[1] - loc_idy[1])) 
     if d < threshold:
       correct_match += 1
+      print loc_idy, loc_idx
+      break
   print correct_match, idx + 1, float(correct_match) / (idx + 1)
   idx += 1
 print correct_match

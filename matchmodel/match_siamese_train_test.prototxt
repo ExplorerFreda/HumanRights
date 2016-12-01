@@ -8,15 +8,13 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    scale: 0.00390625    
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/streetview45/pair_info/sla.info"
-    mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
+    source: "/mnt/sda/backup/data/train/pair_groundtruth_a.txt"
     new_height: 224
     new_width: 224
-    batch_size: 32
+    batch_size: 16
   }
 }
 layer {
@@ -28,15 +26,13 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    scale: 0.00390625    
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/streetview45/pair_info/slp.info"
-    mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
+    source: "/mnt/sda/backup/data/train/pair_groundtruth_p.txt"
     new_height: 224
     new_width: 224
-    batch_size: 32
+    batch_size: 16
   }
 }
 layer {
@@ -48,14 +44,13 @@ layer {
     phase: TEST
   }
   transform_param {
-    scale: 0.00390625    
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/streetview45/pair_info/slta.info"
+    source: "/mnt/sda/backup/data/train/pair_val_a.txt"
     new_height: 224
     new_width: 224
-    batch_size: 32
+    batch_size: 10
   }
 }
 layer {
@@ -67,15 +62,13 @@ layer {
     phase: TEST
   }
   transform_param {
-    scale: 0.00390625    
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "/mnt/sda/backup/streetview45/pair_info/sltp.info"
-    mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
+    source: "/mnt/sda/backup/data/train/pair_val_p.txt"
     new_height: 224
     new_width: 224
-    batch_size: 32
+    batch_size: 10
   }
 }
 layer {
@@ -551,6 +544,6 @@ layer {
   bottom: "label_p"
   top: "loss"
   contrastive_loss_param {
-    margin: 1
+    margin: 150
   }
 }
