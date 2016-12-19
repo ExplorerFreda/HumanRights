@@ -13,7 +13,7 @@ for idx in range(image_num):
   image_name = image_dir + str(idx) + '.jpg'
   im = Image.open(image_name)
 
-  # genetate 400*400 subimage
+  # generate 400*400 subimage
   for i in range(3):
     out = im.rotate(random.randint(-30,30), expand=1)
     centx = out.size[0] / 2

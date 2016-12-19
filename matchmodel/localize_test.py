@@ -2,7 +2,7 @@ image_num = 1600
 test_groundtruth_filename = '/mnt/sda/backup/data/test/groundtruth.txt'
 db_filename = '/mnt/sda/backup/match/database.json'
 test_filename = '/mnt/sda/backup/match/testvector.json'
-threshold = 3 # threshold for location matching
+threshold = 2 # threshold for location matching
 caffe_root = '/home/hyshi/caffe/'
 import sys
 sys.path.insert(0, caffe_root + 'python')
