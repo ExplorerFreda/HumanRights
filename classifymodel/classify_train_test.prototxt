@@ -288,7 +288,7 @@ layer {
   name: "fc8_new"
   type: "InnerProduct"
   inner_product_param {
-    num_output: 3
+    num_output: 1
   }
 }
 layer {
@@ -296,15 +296,5 @@ layer {
   bottom: "label"
   top: "loss"
   name: "loss"
-   type: "SoftmaxWithLoss"
-}
-layer {
-  name: "accuracy"
-  type: "Accuracy"
-  bottom: "fc8_new"
-  bottom: "label"
-  top: "accuracy"
-  include {
-    phase: TEST
-  }
+  type: "SigmoidCrossEntropyLoss"
 }
