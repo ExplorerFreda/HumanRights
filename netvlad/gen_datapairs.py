@@ -65,13 +65,27 @@ def GetNegativePairs(coordinate, max_number):
 
 
 
-def OutputPairs(filename_a, filename_p, positive, negative):
+def OutputPairs(filename_a, filename_p, validation_a, validation_p, positive, negative):
 	pairs = positive
 	pairs.extend(negative)
 	random.shuffle(pairs)
 	fout_a = open(filename_a, 'w')
 	fout_p = open(filename_p, 'w')
-	for pair in pairs:
+	for pair in pairs[3000:]:
+		a = pair[0]
+		p = pair[1]
+		if a[:-7] == p[:-7]: # positive
+			fout_a.write(a + ' 1\n')
+			fout_p.write(p + ' 1\n')
+		else: # negative
+			fout_a.write(a + ' 0\n')
+			fout_p.write(p + ' 0\n')
+	fout_a.close()
+	fout_p.close()
+
+	fout_a = open(validation_a, 'w')
+	fout_p = open(validation_p, 'w')
+	for pair in pairs[:3000]:
 		a = pair[0]
 		p = pair[1]
 		if a[:-7] == p[:-7]: # positive
@@ -87,7 +101,7 @@ def OutputPairs(filename_a, filename_p, positive, negative):
 netvlad_homefolder = '/mnt/sda/backup/NetVLad/'
 [positive_pairs, coordinate] = GetPositivePairs(netvlad_homefolder)
 negative_pairs = GetNegativePairs(coordinate, len(positive_pairs) * 2)
-OutputPairs('data/pair_a.txt', 'data/pair_p.txt', positive_pairs, negative_pairs)
+OutputPairs('data/pair_a.txt', 'data/pair_p.txt', 'data/val_a.txt', 'val_p.txt', positive_pairs, negative_pairs)
 
 
 # ============== For Debug ================
