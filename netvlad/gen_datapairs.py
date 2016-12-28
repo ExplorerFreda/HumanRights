@@ -39,8 +39,9 @@ def GetPositivePairs(home_folder):
 					coordinate[f[:-4]+'.png'] = [float(x) for x in open(f).readline().split(',')]
 				else:
 					image_paths.append(f)
-			for i in range(1, len(image_paths)):
-				positive_pairs.append([image_paths[i-1], image_paths[i]])
+			for i in range(0, len(image_paths)):
+				positive_pairs.append([image_paths[i], image_paths[(i+1)%len(image_paths)]])
+		print folder, len(positive_pairs)
 	return [positive_pairs, coordinate]
 				
 
