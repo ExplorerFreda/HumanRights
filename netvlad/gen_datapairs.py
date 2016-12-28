@@ -45,6 +45,26 @@ def GetPositivePairs(home_folder):
 	return [positive_pairs, coordinate]
 				
 
+def Dist(a, p):
+	return ((a[0] - p[0]) ** 2 + (a[1] - p[1]) ** 2) ** 0.5
+
+
+
+def GetNegativePairs(coordinate, max_number):
+	epsilon = 0.002
+	negative_pairs = list()
+	file_list = coordinate.keys()
+	while len(negative_pairs) < max_number:
+		a = file_list[random.randint(0, len(file_list)-1)]
+		p = file_list[random.randint(0, len(file_list)-1)]
+		coordinate_a = coordinate[a][:2]
+		coordinate_p = coordinate[p][:2]
+		if Dist(coordinate_a, coordinate_p) > epsilon:
+			negative_pairs.append([a,p])
+	return negative_pairs
+
+
+
 def OutputPairs(filename_a, filename_p, positive, negative):
 	pairs = positive
 	pairs.extend(negative)
@@ -66,10 +86,16 @@ def OutputPairs(filename_a, filename_p, positive, negative):
 
 netvlad_homefolder = '/mnt/sda/backup/NetVLad/'
 [positive_pairs, coordinate] = GetPositivePairs(netvlad_homefolder)
-OutputPairs('data/pair_a.txt', 'data/pair_p.txt', positive_pairs, [])
+negative_pairs = GetNegativePairs(coordinate, len(positive_pairs) * 2)
+OutputPairs('data/pair_a.txt', 'data/pair_p.txt', positive_pairs, negative_pairs)
 
 
-# ============== For Debug ================a
+# ============== For Debug ================
+#d = 'd:\\HumanRightsData'
+# [positive_pairs, coordinate] = GetPositivePairs(d)
+# negative_pairs = GetNegativePairs(coordinate, len(positive_pairs) * 2)
+# OutputPairs('data/pair_a.txt', 'data/pair_p.txt', positive_pairs, negative_pairs)
+
 # d = '/mnt/d/Project/CMU/samples/server_files/'
 # [positive_pairs, coordinate] = GetPositivePairs(d)
 # OutputPairs('data/pair_a.txt', 'data/pair_p.txt', positive_pairs, [])
