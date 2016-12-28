@@ -101,7 +101,7 @@ def OutputPairs(filename_a, filename_p, validation_a, validation_p, positive, ne
 netvlad_homefolder = '/mnt/sda/backup/NetVLad/'
 [positive_pairs, coordinate] = GetPositivePairs(netvlad_homefolder)
 negative_pairs = GetNegativePairs(coordinate, len(positive_pairs) * 2)
-OutputPairs('data/pair_a.txt', 'data/pair_p.txt', 'data/val_a.txt', 'val_p.txt', positive_pairs, negative_pairs)
+OutputPairs('data/pair_a.txt', 'data/pair_p.txt', 'data/val_a.txt', 'data/val_p.txt', positive_pairs, negative_pairs)
 
 
 # ============== For Debug ================
