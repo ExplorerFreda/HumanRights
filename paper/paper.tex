@@ -1,0 +1,108 @@
+\documentclass[sigconf, review=true, anonymous=true]{acmart}
+
+\usepackage{booktabs} % For formal tables
+
+
+% Copyright
+%\setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+
+% DOI
+%\acmDOI{10.475/123_4}
+
+% ISBN
+%\acmISBN{123-4567-24-567/08/06}
+
+%Conference
+%\acmConference[ICMR'17]{ACM Woodstock conference}{July 1997}{El Paso, Texas USA} 
+%\acmYear{1997}
+%\copyrightyear{2016}
+
+%\acmPrice{15.00}
+
+
+\begin{document}
+\title{Joint Optimization of Saliency Estimation and Video Localization}
+
+\author{Haoyue Shi}
+\affiliation{
+  \institution{School of Electronics Engineering and Computer Science, Peking University}
+  \city{Beijing, China} 
+  \postcode{100871}
+}
+\email{hyshi@pku.edu.cn}
+
+\author{Jia Chen}
+\affiliation{
+  \institution{Language Technologies Institute, Carnegie Mellon University}
+  \city{Pittsburgh, PA, USA} 
+  \postcode{15213}
+}
+\email{jiac@cs.cmu.edu.cn}
+
+\author{Alexander G. Hauptmann}
+\affiliation{
+  \institution{Language Technologies Institute, Carnegie Mellon University}
+  \city{Pittsburgh, PA, USA} 
+  \postcode{15213}
+}
+\email{alex@cs.cmu.edu.cn}
+
+% The default list of authors is too long for headers}
+
+\begin{abstract}
+This paper provides a sample of a \LaTeX\ document which conforms,
+somewhat loosely, to the formatting guidelines for
+ACM SIG Proceedings\footnote{This is an abstract footnote}. 
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+ <concept>
+  <concept_id>10010520.10010553.10010562</concept_id>
+  <concept_desc>Computer systems organization~Embedded systems</concept_desc>
+  <concept_significance>500</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10010520.10010575.10010755</concept_id>
+  <concept_desc>Computer systems organization~Redundancy</concept_desc>
+  <concept_significance>300</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10010520.10010553.10010554</concept_id>
+  <concept_desc>Computer systems organization~Robotics</concept_desc>
+  <concept_significance>100</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10003033.10003083.10003095</concept_id>
+  <concept_desc>Networks~Network reliability</concept_desc>
+  <concept_significance>100</concept_significance>
+ </concept>
+</ccs2012>  
+\end{CCSXML}
+
+\ccsdesc[500]{Computer systems organization~Embedded systems}
+\ccsdesc[300]{Computer systems organization~Redundancy}
+\ccsdesc{Computer systems organization~Robotics}
+\ccsdesc[100]{Networks~Network reliability}
+
+% We no longer use \terms command
+%\terms{Theory}
+
+\keywords{Image Retrieval, Image Localization}
+
+\maketitle
+
+\input{samplebody-conf}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sigproc} 
+
+\end{document}

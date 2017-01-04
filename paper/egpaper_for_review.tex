@@ -1,0 +1,180 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+% \cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+\begin{document}
+
+\title{Saliency Score Guided Video Geo-Localization: A Joint Model Approach}
+
+\author{Haoyue Shi\\
+Peking University\\
+No.5 Yiheyuan Road\\
+Beijing, China\\
+{\tt\small hyshi@pku.edu.cn}
+\and
+Jia Chen\\
+Carnegie Mellon University\\
+5000 Forbes Ave\\
+Pittsburgh, PA, USA\\
+{\tt\small jiac@cs.cmu.edu.cn}
+\and
+Alexander G. Hauptmann\\
+Carnegie Mellon University\\
+5000 Forbes Ave\\
+Pittsburgh, PA, USA\\
+{\tt\small alex+@cs.cmu.edu.cn}
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+\begin{abstract}
+In this paper, we aim to determine the location of videos by matching to a reference database, which contains plenty of geo-tagged images. We demonstrate that salient parts (\eg buildings) of a video frame (\ie image) contains more information than non-salient parts (\eg roads and trees), so that the saliency score can perform as a guide in the matching procedure. In consideration of this fact, we provide a joint model based on deep CNN architecture for both estimating saliency score and optimizing the matching between images guided by the saliency score in the training procedure. The experiments on Boston dataset and Ukraine dataset have shown that our saliency aware method can significantly improve the accuracy of matching. Moreover, we design a smoothing algorithm trough the timeline, which can be applied to extend image localization to video geo-location tracking.
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+
+%-------------------------------------------------------------------------
+\section{Background and Related Work}
+\subsection{Self-Paced Learning}
+
+%-------------------------------------------------------------------------
+\section{Joint Model}
+\subsection{Problem Formulation}
+\par
+Since we have demonstrated that the building parts play more important role in image matching, what we want to do next is to build a joint model to both optimize the matching procedure and estimate the salient part for an image. Therefore, we could use the saliency score of each part of the image to guide the matching procedure.
+\par
+For convenience of expression, we introduce some notations in Table~\ref{table1}. 
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|p{0.3\textwidth}|}
+\hline
+$q_i$ & region $i$ in the query image $q$\\[0.2cm]
+$d_j$ & region $j$ in the database image $d$\\[0.2cm]
+$s(q_i), s(d_j)$ & the saliency of the region $q_i, d_j$, i.e. buildingness in our
+task, ranged within $[0,1]$ \\[0.2cm]
+$m(q_i, d_j)$ & matching score between region $q_i$ and $d_j$, where the better they match, the lower $m(q_i,d_j)$\\[0.2cm]
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{table1}Notations used in problem formulation.}
+\end{table}
+Intuitively, we define the loss function
+\begin{equation}\label{eq1}
+L(q,d; s,m) = L_s(q,d; s) + L_{sm}(q,d;s,m) 
+\end{equation}
+Our purpose is to minimize the loss function $L$ with optimizing the function $s$ and $m$.
+\par
+We have the labels of some images that indicates whether a region in a building is salient, so we use function $L_s$ to penalize the cases that output different saliency score with ground truth, that is
+\begin{equation}\label{eq3}
+L_s(q,d; s) = \frac12 [\sum_{q_i\in q}(s(q_i)-g_{q_i})^2 + \sum_{d_j\in d}(s(d_j)-g_{d_j})^2]
+\end{equation}
+where $g_{q_i}$ and $g_{d_j}$ are the real saliency scores of the region $q_i$ and $d_j$, namely the ground truth we have. When we don't have the saliency label for query image, eq\eqref{eq3} can be just written as
+\begin{equation}\label{eq4}
+L_s(q,d; s) =  \sum_{d_j\in d}(s(d_j)-g_{d_j})^2
+\end{equation}
+\par
+Assuming that the different part of a same building would not be divergent a lot, since we intend to focus more on the salient regions of the image, we design the second part of eq\eqref{eq1} as
+\begin{equation}
+L_{sm}(q,d; s,m) = \frac1T  \sum_{q_i\in q, d_j\in d}  s(q_i)s(d_j) C(q_i,d_j)
+\end{equation}
+where $T = \sum_{q_i \in q, d_j \in d} s(q_i)s(d_j)$; $C$ denotes the contrastive loss function, which can be written as 
+\begin{equation} \label{contrastive}
+C(q_i, d_j) = l\cdot m(q_i, d_j) + (1-l)\cdot \max(0, M - m(q_i,d_j)) 
+\end{equation}
+where $l$ is the label that denotes whether $(q,d)$ is a positive (matched) pair; $M$ is the margin for negative pairs.
+\subsection{Joint Model for Frame Geo-Localization}
+\subsection{Video Geo-Location Smoothing}
+%-------------------------------------------------------------------------
+\section{Experiment Result}
+\subsection{Dataset Collection}
+% \mathit, \ie, \eg, \etal
+
+\begin{figure}[t]
+\begin{center}
+\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+   %\includegraphics[width=0.8\linewidth]{egfigure.eps}
+\end{center}
+   \caption{Example of caption.  It is set in Roman so that mathematics
+   (always set in Roman: $B \sin A = A \sin B$) may be included without an
+   ugly clash.}
+\label{fig:long}
+\label{fig:onecol}
+\end{figure}
+
+
+\begin{figure*}
+\begin{center}
+\fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
+\end{center}
+   \caption{Example of a short caption, which should be centered.}
+\label{fig:short}
+\end{figure*}
+
+%------------------------------------------------------------------------
+\section{Conclusion and Future Work}
+
+%-------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------
+%figures \ref{fig:short}
+
+
+%-------------------------------------------------------------------------
+% \footnote
+
+
+%-------------------------------------------------------------------------
+% \cite{xxx}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+Method & Frobnability \\
+\hline\hline
+Theirs & Frumpy \\
+Yours & Frobbly \\
+Ours & Makes one's heart Frob\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Results. Ours is better.}
+\end{table}
+
+%-------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------
+
+%------------------------------------------------------------------------
+
+
+{
+\small
+\bibliographystyle{ieee}
+\bibliography{egbib}
+}
+
+\end{document}
