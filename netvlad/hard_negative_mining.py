@@ -10,14 +10,12 @@
 import json
 import numpy as np
 import random
-
+import os
 
 ################## For Run #######################
 netvlad_homefolder = '/mnt/sda/backup/NetVLad/'
-input_filename = '/mnt/sda/backup/match/netvlad-vector.json'
-list_filename = '/mnt/sda/backup/NetVLad/list.txt'
-output_filename_a = 'data/hard_negative_pair_a.txt'
-output_filename_p = 'data/hard_negative_pair_p.txt'
+input_filename = '/mnt/sda/backup/match/netvlad_vector.json'
+list_filename = '/mnt/sda/backup/NetVLad/filelist.txt'
 ################## For Run #######################
 
 ################ For Debug #######################
@@ -40,7 +38,7 @@ def GetBoundary(vectors):
 	sum_dist = 0
 	for i in range(10000):
 		l = random.randint(0, len(vectors)-1)
-		r = random.randinr(0, len(vectors)-1)
+		r = random.randint(0, len(vectors)-1)
 		dist = Dist(vectors[l], vectors[r])
 		sum_dist += dist
 		count += 1

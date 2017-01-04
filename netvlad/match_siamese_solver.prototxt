@@ -1,15 +1,15 @@
 net: "match_siamese_train_val.prototxt"
 test_iter: 100
 test_interval: 500
-base_lr: 1e-5
+base_lr: 1e-7
 momentum: 0.9
 weight_decay: 0.00001
 lr_policy: "step"
 gamma: 0.1
 stepsize: 50000
 display: 100
-max_iter: 200000
+max_iter: 100000
 snapshot: 5000
-snapshot_prefix: "/mnt/sda/backup/match/netvlad_model"
+snapshot_prefix: "/mnt/sda/backup/match/netvlad-7-newmodel"
 solver_mode: GPU
 
