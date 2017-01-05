@@ -59,7 +59,7 @@ class PairGenerator:
 		return [positive_pairs, negative_pairs]
 
 
-	def OutputPairs(filename_a, filename_p, positive, negative):
+	def OutputPairs(self, filename_a, filename_p, positive, negative):
 		print filename_a, filename_p, len(positive) + len(negative)
 		pairs = positive
 		pairs.extend(negative)
