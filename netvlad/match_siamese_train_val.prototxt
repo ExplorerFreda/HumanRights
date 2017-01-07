@@ -11,10 +11,10 @@ layer {
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "data/pair_new_a.txt"
+    source: "data/train_a.txt"
     new_height: 224
     new_width: 224
-    batch_size: 32
+    batch_size: 64
   }
 }
 layer {
@@ -29,10 +29,10 @@ layer {
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "data/pair_new_p.txt"
+    source: "data/train_p.txt"
     new_height: 224
     new_width: 224
-    batch_size: 32
+    batch_size: 64
   }
 }
 layer {
@@ -47,7 +47,7 @@ layer {
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "data/val_new_a.txt"
+    source: "data/val_a.txt"
     new_height: 224
     new_width: 224
     batch_size: 30
@@ -65,7 +65,7 @@ layer {
     mean_file: "/mnt/sda/backup/45degree/VGG_mean.binaryproto"
   }
   image_data_param {
-    source: "data/val_new_p.txt"
+    source: "data/val_p.txt"
     new_height: 224
     new_width: 224
     batch_size: 30

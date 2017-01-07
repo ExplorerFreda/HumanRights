@@ -6,14 +6,30 @@ import numpy as np
 import json
 import os
 
-
-######### Config NetVLad Finetuned #############
+######### Config NetVLadQ Finetune-Model #############
 model  = 'deploy.prototxt'
-weights = '/mnt/sda/backup/match/netvlad-7_model_iter_45000.caffemodel'
-db_filename = '/mnt/sda/backup/match/netvlad_vector.json'
-pyramid_db_filename = '/mnt/sda/backup/match/netvlad_pyramid_vector.json'
-######### Config NetVLad Finetuned #############
+weights = '/mnt/sda/backup/match/models_save/netvlad-model_iter_100000.caffemodel'
+db_filename = '/mnt/sda/backup/match/netvladQ_finetune_vector.json'
+pyramid_db_filename = '/mnt/sda/backup/match/netvladQ_finetune_pyramid_vector.json'
+######### Config NetVLad Finetune-Model #############
 
+'''
+######### Config NetVLad Finetune-Model #############
+model  = 'deploy.prototxt'
+weights = '/mnt/sda/backup/match/models_save/netvlad-model_iter_100000.caffemodel'
+db_filename = '/mnt/sda/backup/match/netvlad_finetune_vector.json'
+pyramid_db_filename = '/mnt/sda/backup/match/netvlad_finetune_pyramid_vector.json'
+######### Config NetVLad Finetune-Model #############
+'''
+
+'''
+######### Config NetVLadQ VGG-CNN-Model #############
+model  = 'deploy.prototxt'
+weights = '/mnt/sda/backup/45degree/model/VGG_CNN_M.caffemodel'
+db_filename = '/mnt/sda/backup/match/netvladQ_vgg-cnn-m_vector.json'
+pyramid_db_filename = '/mnt/sda/backup/match/netvladQ_vgg-cnn-m_pyramid_vector.json'
+######### Config NetVLadQ VGG-CNN-Model #############
+'''
 
 '''
 ######### Config VGG-CNN-M Model #############
@@ -88,8 +104,8 @@ def OutputFileList(filelist, filename):
 	fout.close()
 
 
-file_list = GetImageFileList('/mnt/sda/backup/NetVLad/')
+file_list = GetImageFileList('/mnt/sda/backup/NetVLad_Q/')
 print 'File List Size:', len(file_list)
-#GenerateDatabasePyramid(pyramid_db_filename, file_list)
+GenerateDatabasePyramid(pyramid_db_filename, file_list)
 GenerateDatabaseSingle(db_filename, file_list)
-OutputFileList(file_list, '/mnt/sda/backup/NetVLad/filelist.txt')
+OutputFileList(file_list, '/mnt/sda/backup/NetVLad_Q/filelist.txt')
