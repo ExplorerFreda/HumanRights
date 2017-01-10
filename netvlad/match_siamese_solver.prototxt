@@ -10,6 +10,6 @@ stepsize: 50000
 display: 100
 max_iter: 100000
 snapshot: 5000
-snapshot_prefix: "/mnt/sda/backup/match/netvlad-7-newmodel"
+snapshot_prefix: "/mnt/sda/backup/match/netvlad-model"
 solver_mode: GPU
 
