@@ -73,7 +73,24 @@ s(q_i) = \frac{\sum_{d_j \in d, d \in D} m(q_i, d_j)}{\sum_{q_k \in Q}\sum_{d_j 
 where $Q$ denotes the set of all query images, $\epsilon$ is a small constant number that guarantee the denominator would be positive. Both the denominator and numerator would be non-negative since $m(q_i, d_j)$ is calculated by the distance of the two regions in a representing space. 
 \subsection{Saliency Guided Image and Video Frame Geo-Localization}
 \par
-
+\subsection{Joint Saliency Estimation and Matching Optimization}
+\par
+We utilize the saliency score to guide the matching optimization and apply the updated match model to estimate more precise saliency score for each region of images. This can be done by an iteration procedure introduced in Algorithm~\ref{alg:joint}.
+\begin{algorithm}
+\caption{Joint Saliency Estimation and Matching Optimization}
+\label{alg:joint}
+\begin{algorithmic}  
+\FOR{$q_i\in Q$}
+	\STATE{set $s(q_i) = 0.5$}
+\ENDFOR
+\FOR{$d_i\in D$}
+	\STATE{set $s(d_i) = 0.5$}
+\ENDFOR
+\REPEAT
+	\STATE{haha}
+\UNTIL{LOSS}
+\end{algorithmic}
+\end{algorithm}
 \section{Experiments}
 
 \section{Conclusion}
