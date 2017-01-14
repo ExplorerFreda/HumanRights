@@ -1,8 +1,8 @@
 \documentclass[sigconf, review=true, anonymous=true]{acmart}
 
 \usepackage{booktabs} % For formal tables
-
-
+\usepackage{algorithm}
+\usepackage{algorithmic}
 % Copyright
 %\setcopyright{none}
 %\setcopyright{acmcopyright}
@@ -29,7 +29,7 @@
 
 
 \begin{document}
-\title{Joint Optimization of Saliency Estimation and Video Localization}
+\title{A Joint Model for Saliency Estimation and Video Localization}
 
 \author{Haoyue Shi}
 \affiliation{
@@ -58,9 +58,8 @@
 % The default list of authors is too long for headers}
 
 \begin{abstract}
-This paper provides a sample of a \LaTeX\ document which conforms,
-somewhat loosely, to the formatting guidelines for
-ACM SIG Proceedings\footnote{This is an abstract footnote}. 
+\par
+In this paper, we aim to determine the location of videos by matching the frames to a reference database, which contains plenty of geo-tagged images. We have demonstrated that salient regions (e.g. buildings) of a video frame (i.e. image) contains more information than non-salient regions (e.g. sky, roads and trees), so that the saliency score can perform as a guide in the matching procedure. In consideration of this fact, we propose a joint model based on a deep CNN architecture for both estimating saliency score and optimizing the matching between images guided by the saliency score in the training procedure. The experiments on Boston dataset and Tokyo 24/7 dataset have shown that our saliency aware method can help improve the accuracy of matching, and provide a reasonable explanation for the matched pairs. 
 \end{abstract}
 
 \begin{CCSXML}
@@ -96,7 +95,7 @@ ACM SIG Proceedings\footnote{This is an abstract footnote}.
 % We no longer use \terms command
 %\terms{Theory}
 
-\keywords{Image Retrieval, Image Localization}
+\keywords{Image Localization, Video Localization, Deep Learning}
 
 \maketitle
 
