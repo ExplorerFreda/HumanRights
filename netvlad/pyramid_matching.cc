@@ -27,8 +27,8 @@ private:
 			v.push_back(vector<float>());
 			for (int j = 0; j < 4096; j ++) {
 				l = r;
-				while ((str[l] < '0' || str[l] > '9')) l ++;
-				for (r = l; str[r] >= '0' && str[r] <= '9' || str[r] == '.'; r++);
+				while ((str[l] < '0' || str[l] > '9') && str[l]!='-') l ++;
+				for (r = l+1; str[r] >= '0' && str[r] <= '9' || str[r] == '.'; r++);
 				char buffer[50];
 				memcpy(buffer, str + l, sizeof buffer[0] * (r-l));
 				buffer[r-l] = 0;
@@ -40,48 +40,13 @@ private:
 	}
 public:
 	void ReadPyramid(const char* filename, 
-		vector< vector< vector<float> > >& vec, 
-		const int read_number = 1125) {
-		int fd = open(filename, O_RDWR | O_APPEND | O_CREAT);
-		if (fd < 0) {
-			printf("open failed!\n");
-			exit(1);
-		}
+		vector< vector< vector<float> > >& vec) {
 		
-		char *p_map = (char *) mmap(
-			0, PAGE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-		if (p_map == MAP_FAILED) {
-			printf("mmap failed!\n");
-			munmap(p_map, PAGE_SIZE);
-			exit(1);
-		}
-		strcpy(buffer, p_map);
-		int cnt = 0;
-		long long buffer_head = 0;
-		for (char* pos = strstr(buffer, "\n"); pos != NULL; 
-			pos = strstr(buffer, "\n")) {
-			*pos = 0;
+		FILE* fin = fopen(filename, "r");
+		while (fgets(buffer, PAGE_SIZE << 2, fin)) {
+			printf("%d\n", vec.size());
 			process_pyramid(vec, buffer);
-			strcpy(buffer, pos + 1);
-			printf("%d %d %d\n", ++ cnt, strlen(buffer), strlen(p_map));
-			if (cnt == read_number - 1) {
-				process_pyramid(vec, buffer);
-				break;
-			}
-			if (strlen(buffer) < PAGE_SIZE) {
-				munmap(p_map, PAGE_SIZE);
-				p_map = (char *) mmap(
-					NULL, PAGE_SIZE, PROT_READ, MAP_SHARED, fd, 
-					buffer_head += PAGE_SIZE);
-				if (p_map == MAP_FAILED) {
-					printf("mmap failed!\n");
-					munmap(p_map, PAGE_SIZE);
-					exit(1);
-				}
-				strcpy(buffer + strlen(buffer), p_map);
-			}
 		}
-		munmap(p_map, PAGE_SIZE);
 	}
 };
 
@@ -169,12 +134,21 @@ public:
 vector< vector< vector<float> > > pyramid_vector;
 vector< vector< vector<float> > > pyramid_Q_vector;
 PyramidDataReader reader;
-int main() {
-	reader.ReadPyramid("../../data/netvlad_finetune_pyramid_vector.json", 
-		pyramid_vector, 75984);
-	reader.ReadPyramid("../../data/netvladQ_finetune_pyramid_vector.json", 
-		pyramid_Q_vector);
+int main() { 
+	// finetune
+//	reader.ReadPyramid("../../data/netvlad_finetune_pyramid_vector.json", 
+//		pyramid_vector);
+//	reader.ReadPyramid("../../data/netvladQ_finetune_pyramid_vector.json", 
+//		pyramid_Q_vector);
+//	PyramidMatcher::OutputMatchResult(pyramid_vector, pyramid_Q_vector,
+//		"../../data/netvlad_pyramid_finetune_matchresult.json");
 	
+
+	// vgg-cnn-m
+	reader.ReadPyramid("../../data/netvlad_vgg-cnn-m_pyramid_vector.json", 
+		pyramid_vector);
+	reader.ReadPyramid("../../data/netvladQ_vgg-cnn-m_pyramid_vector.json", 
+		pyramid_Q_vector);
 	PyramidMatcher::OutputMatchResult(pyramid_vector, pyramid_Q_vector,
 		"../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json");
 	
