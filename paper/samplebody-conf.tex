@@ -1,14 +1,16 @@
 \section{Introduction}
 \par
-Image geolocalization is to use computer vision techniques to estimate the location (often GPS) of a given ground-level image by matching it to a reference database. Hays and Efros~\cite{hays2008im2gps} have proved the feasibility of this task by leveraging over 6 million GPS-tagged images from the Internet.
+Image geolocalization is a task which requires to use computer vision techniques to estimate the location (often GPS) of a given ground-level image by matching it to a reference database. In their previous work, Hays and Efros~\cite{hays2008im2gps} have proved the feasibility of this task by leveraging over 6 million GPS-tagged images from the Internet.
 \par
-It's much easier for human beings to determine the geo-location for photographs of famous scenes rather than those of oceans, grasslands or even ordinary houses. This is because the famous scenes are somehow rare in the world, so that they are more discernible than oceans, grasslands and ordinary houses. Similary, Figure~\ref{fig:library} is a photograph of Boston Public Library, McKim Building. When seeing the image, we would focus on the discernible (salient) regions but not the non-salient ones, since only the former could provide us information about the location of this image. In Figure~\ref{fig:library}, regions in red frames are salient while those in blue frames are not.
+It's much easier for human beings to determine the geo-location for photographs of famous scenes rather than those of oceans, grasslands or even ordinary houses. This is because the famous scenes are rare, so that they are more discernible than oceans, grasslands and ordinary houses.
+\par 
+Similary, buildings, especially famous buildings, are always more discernible than roads, trees, etc.  Figure~\ref{fig:library} is a photograph of Boston Public Library, McKim Building. When determining the geo-location of the image, we would focus on the discernible (salient) regions but not the non-salient ones, since only the former could provide us information about the location. In Figure~\ref{fig:library}, regions in red frames are salient while those in blue frames are not.
 \par
-Therefore, we aim to use saliency to guide image/video localization. To estimate how salient a region is, we reconsider the fact that non-salient regions are less discernible. In other words, non-salient regions would be more common than salient ones in the database. An intuitive idea is to set saliency score of a region inversely proportional to the number of its similar regions in the database. To evaluate how similar two regions are, we need to apply convolutional nueral network (CNN) to extract features from images. 
+Therefore, we aim to use the attribute of saliency to guide image/video localization. To estimate how salient a region is, we reconsider the fact that non-salient regions are less discernible. In other words, non-salient regions would be more common than salient ones in the database. We introduce the concept \textbf{saliency score} to measure how salient a region is. An intuitive idea is to set saliency score of a region inversely proportional to the number of its similar regions in the database. To evaluate how similar two regions are, we need to apply convolutional neural network (CNN), which has been widely used in the field of deep learning, to extract features from images. 
 \par
-Oppositely, after estimating the saliency of each region in an image. We propose an attention based model to force the geo-localization system to pay more attention to salient regions when localizing an image. Consequently, the model tends to be a joint model to both estimate saliency score of regions utilizing a matching model and optimize the matching model with the saliency score. 
+In another hand, after estimating the saliency score of each region in an image. We propose an attention based model to guide the geo-localization system to pay more attention to salient regions when localizing an image. Consequently, the model tends to be a joint model to both estimate saliency score of regions utilizing a matching model and optimize the matching model with the saliency score. 
 \par
-We evaluate our model on two image/video localization datasets. The experimental results have shown that our method can improve the performance on the image/video localization task.
+We evaluate our method on two video/image geo-localization datasets. The experimental results have shown that our method can improve the performance on the image/video localization task.
 \par
 The contribution of this paper is threefold. 
 \begin{enumerate}
@@ -17,12 +19,12 @@ The contribution of this paper is threefold.
 \item Our method is general and it could be extended to other joint optimization tasks. 
 \end{enumerate}
 \begin{figure}
-\includegraphics[width=0.41\textwidth]{library}
+\includegraphics[width=0.41\textwidth]{img/library}
 \\[0.1cm]
-\includegraphics[width=0.1\textwidth]{library_1}
-\includegraphics[width=0.1\textwidth]{library_2}
-\includegraphics[width=0.1\textwidth]{library_3}
-\includegraphics[width=0.1\textwidth]{library_4}
+\includegraphics[width=0.1\textwidth]{img/library_1}
+\includegraphics[width=0.1\textwidth]{img/library_2}
+\includegraphics[width=0.1\textwidth]{img/library_3}
+\includegraphics[width=0.1\textwidth]{img/library_4}
 \caption{An example of salient regions and non-salient regions of an image.}
 \label{fig:library}
 \end{figure}
@@ -74,13 +76,13 @@ s(q_i) \propto \sum_{d_j \in d, d \in D} m(q_i, d_j)
 \end{equation}
 where $D$ denotes the set of all database images. Analogously, we can also compute the saliency score of database image regions. In order to normalize the saliency score, we compute $s(q_i)$ by Eq~\eqref{eq-2}.
 \begin{equation}
-s(q_i) = \frac{\sum_{d_j \in d, d \in D} m(q_i, d_j)}{\sum_{q_k \in Q}\sum_{d_j \in d, d \in D} m(q_k, d_j) + \epsilon}
+s(q_i) = \frac{\sum_{d_j \in d, d \in D} m(q_i, d_j)}{\max_{q_k \in Q}\sum_{d_j \in d, d \in D} m(q_k, d_j) + \epsilon}
 \label{eq-2}
 \end{equation}
-where $Q$ denotes the set of all query images, $\epsilon$ is a small constant number that guarantee the denominator would be positive. Both the denominator and numerator would be non-negative since $m(q_i, d_j)$ is calculated by the distance of the two regions in a representing space. 
+where $Q$ denotes the set of all query images, $\epsilon$ is a small constant number that guarantee the denominator would be positive. Both the denominator and numerator would be non-negative since $m(q_i, d_j)$ is calculated by the distance of the two regions in the feature space. What's more, we can compute the saliency score for database regions in the same way. 
 \subsection{Saliency Guided Image and Video Frame Geo-Localization}
 \par
-At first, we assume that we already have a pre-trained model for place recognition and denote it as $M$. Inspired by the work of Lin et al.~\cite{lin2015learning}, we refine it by applying constructing a Siamese Network and modify the loss function between two images as following:
+At first, we assume that we already have a pre-trained model for place recognition and denote it as $M$. Inspired by the work of Lin et al.~\cite{lin2015learning}, we refine it by constructing a Siamese Network and modify the loss function between two images as following:
 \begin{equation}
 \label{eq-3}
 L_s(q,d,l) = \sum_{q_i\in q} \frac{|q_i|}{|q|}  \frac{|d_j|}{|d|} s(q_i)s(d_j)L(q_i, d_j, l)
@@ -93,7 +95,16 @@ L(q_i, d_j, l)=\frac{1}{2}lD^2 + \frac{1}{2}(1-l)\max(0,m-D^2)
 where $D = ||f(q_i) - f(d_j)||_2$ is the Euclidean Distance of the two subimages in the feature space. In particular, $s(q_i)$ is fixed as well as $s(d_j)$ in this step. 
 \subsection{Joint Saliency Estimation and Matching Optimization}
 \par
-We utilize the saliency score to guide the matching optimization and apply the updated match model to estimate more precise saliency score for each region of images. Namely, we are trying to teach the computer how much attention it need to pay to each region of the image by the saliency score. This can be done by an iteration procedure introduced in Algorithm~\ref{alg:joint}.
+We utilize the saliency score to guide the matching optimization and apply the updated match model to estimate more precise saliency score for each region of images. Namely, we are trying to teach the computer how much attention it need to pay to each region of the image by the saliency score. This can be done by an iteration procedure introduced in Algorithm~\ref{alg:joint}. The structure of our model is shown in Figure~\ref{fig:network}. Different from Lin et al.~\cite{lin2015learning}, we apply only one CNN rather than two seprate CNNs since the images in database and query may be not cross-view.
+\par
+According to Eq~\eqref{eq-3} and Eq~\eqref{eq-4}, we can modify the fine-tuning procedure of the match model from {\sl image pair based training} into {\sl region pair based training}. 
+\par
+Thus, in order to obtain a better result for learning, we apply self-paced learning algorithm to learn ``salient pairs'' first. We define the saliency score of a data(region) pair $(q_i,d_j)$ by Eq~\eqref{eq-5}
+\begin{equation}
+S(q_i, d_j) = s(q_i) + s(d_j) 
+\label{eq-5}
+\end{equation}
+In each iteration, after estimating the saliency score, we sort the training data(region) pairs $\{(q_i,d_j)\}$ by $S(q_i,d_j)$ in descending order, and let the system to learn the first $\lambda$ pairs only. Here, $\lambda$ is a hyper-parameter related to the size of data pairs. 
 \begin{algorithm}
 \caption{Joint Saliency Estimation and Matching Optimization}
 \label{alg:joint}
@@ -107,13 +118,133 @@ We utilize the saliency score to guide the matching optimization and apply the u
 \STATE{set $M$ = initial model}
 \FOR{iteration $\leftarrow$ 1 to MAX\_ITER}
 	\STATE{Estimate saliency socre with Eq~\eqref{eq-2}}
-	\STATE{Optimize $M$ with Eq~\eqref{eq-3}}
+	\STATE{Optimize $M$ with Eq~\eqref{eq-3} and Eq~\eqref{eq-4}}
+	\STATE{Increase $\lambda$}
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{img/structure}
+\caption{The structure of our model.}
+\label{fig:network}
+\end{figure}
 
 \section{Experiments}
 \par
-In the experiments, we use caffe~\cite{jia2014caffe} as the deep learning framework and VGG-CNN-M~\cite{chatfield2014return} as the pre-trained model $M$ for match. 
+In the experiments, we use Caffe~\cite{jia2014caffe} as the deep learning framework and VGG-CNN-M~\cite{chatfield2014return} as the pre-trained model $M$ for match. 
+\par
+For each image, we divided it into a pyramid, where the first layer is the image itself, the second layer contains $2 \times 2$ subimages and the third layer contains $3 \times 3$ subimages. Thus, each image has 14 regions when we apply our saliency guided geo-localization method. The saliency score of each region is estimated seperately. Figure~\ref{fig:pyramid} shows how we divide an image into regions. 
+\begin{figure}
+\includegraphics*[width=0.9\linewidth]{img/regions}
+\caption{The regions of an image in our experiments.}
+\label{fig:pyramid}
+\end{figure}
+\subsection{Datasets}
+We applied our method on both Boston dataset and Tokyo Time Machine dataset. Before describing the experiments, let us first briefly introduce the two datasets. 
 
-\section{Conclusion}
+\subsubsection{Boston Dataset}
+\par 
+We collected 37 video clips which are related to the event of Boston Marathon bombing from the internet. Our purpose is to geo-localize them to help the event re-construction. Figure~\ref{fig:bostonvideo} shows some samples of the video. Besides, we collected 10,000 images around where the bombing happened from Google Map as the database. Figure~\ref{fig:dbregion} shows the region that our database covers. The colored masks are drawn by Google Map automatically, indicating the buildings. We sampled 2,500 GPS coordinate uniformally in such the region. For each GPS coordinate, we collected 4 image from 4 different perspective of view. 
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{img/video_1}
+\includegraphics[width=0.45\linewidth]{img/video_2}
+\\[0.1cm]
+\includegraphics[width=0.45\linewidth]{img/video_3}
+\includegraphics[width=0.45\linewidth]{img/video_4}
+\caption{Sample video clips collected from the internet.}
+\label{fig:bostonvideo}
+\end{figure}
+\begin{figure}
+\includegraphics[width=0.92\linewidth]{img/db_region}
+\caption{The region where the database of Boston dataset covers. }
+\label{fig:dbregion}
+\end{figure}
+
+\subsubsection{Tokyo Time Machine Dataset}
+\par
+
+Tokyo Time Machine (TokyoTM) dataset was released by Arandjelovic et al.~\cite{Arandjelovic16}, generated  from  downloaded  Time  Machine  panoramas. Table ~\ref{table:netvlad} shows  the  sizes  of  Tokyo Time Machine dataset. 
+
+\begin{table}
+\begin{tabular}{l|rr}
+Dataset & Database & Query set \\
+\hline
+\hline
+Tokyo Time Machine-train & 49,104 & 7,277 \\
+Tokyo Time Machine-val & 49,056 & 7,186 \\
+Tokyo 24/7 (-test) & 75,984 & 1,125\\
+\hline
+Boston-train & 8,000 & 8,000 \\
+Boston-val & 2,000 & 2,000 \\
+Boston-test & 10,000 & 37 video clips
+\end{tabular}
+\caption{The size of the dataset we used in the experiments. The train/val(idation)/test dataset is mutually disjoint geographically. For the Boston train and validation dataset, we used data augmentation(zooming, rotating and translating) to transform images in database into query images. }
+\label{table:netvlad}
+\end{table}
+
+
+
+\subsection{Saliency Estimation}
+\subsubsection{Qualitative Evaluation}
+\par
+To evaluate our method, we applied the method introduced in Section~3.1 to estimate the saliency score for each region of a given image. Figure~\ref{fig:saliency} shows the 8 most salient and 8 most non-salient regions in the Tokyo 24/7 database, while Table~\ref{table:saliencyscore}. We can easily see that the salient regions are all buildings with clear structure(1-8) while the non-salient regions are images from ``bad pictures''(9-11), trees(13-14), sky(15) and indiscernible buildings(12 and 16). 
+\begin{figure}
+~\\[0.1cm]
+\includegraphics[width=0.2\linewidth]{img/sal_1}
+\includegraphics[width=0.2\linewidth]{img/sal_2}
+\includegraphics[width=0.2\linewidth]{img/sal_3}
+\includegraphics[width=0.2\linewidth]{img/sal_4}
+\\[0.1cm]
+\includegraphics[width=0.2\linewidth]{img/sal_5} 
+\includegraphics[width=0.2\linewidth]{img/sal_6} 
+\includegraphics[width=0.2\linewidth]{img/sal_7} 
+\includegraphics[width=0.2\linewidth]{img/sal_8} 
+\\[0.3cm]
+\includegraphics[width=0.2\linewidth]{img/nonsal_1}
+\includegraphics[width=0.2\linewidth]{img/nonsal_2}
+\includegraphics[width=0.2\linewidth]{img/nonsal_3}
+\includegraphics[width=0.2\linewidth]{img/nonsal_4}
+\\[0.1cm]
+\includegraphics[width=0.2\linewidth]{img/nonsal_5}
+\includegraphics[width=0.2\linewidth]{img/nonsal_6}
+\includegraphics[width=0.2\linewidth]{img/nonsal_7}
+\includegraphics[width=0.2\linewidth]{img/nonsal_8}
+\\
+\caption{8 most salient regions(top) and 8 most non-salient regions.}
+\label{fig:saliency}
+\end{figure}
+
+\begin{table}
+\begin{tabular}{r|r|r}
+ID\# & Label & Saliency Score \\
+\hline \hline
+1 & salient & 1 \\
+2 & salient & 0.942824053 \\
+3 & salient & 0.880154725 \\
+4 & salient & 0.874608251 \\
+5 & salient & 0.860078978 \\
+6 & salient & 0.850809385 \\
+7 & salient & 0.829040028 \\
+8 & salient & 0.828695266 \\
+9 & non-salient & 0.322388817 \\
+10 & non-salient & 0.324800642 \\
+11 & non-salient & 0.325108224 \\
+12 & non-salient & 0.327541606 \\
+13 & non-salient & 0.328131344 \\
+14 & non-salient & 0.328999699 \\
+15 & non-salient & 0.329619018 \\
+16 & non-salient & 0.330029754
+\end{tabular}
+\caption{Saliency socre of 8 most salient regions and 8 most non-salient regions.}
+\label{table:saliencyscore}
+\end{table}
+
+\subsubsection{Quantatative Evaluation}
+\par
+In order to show the effiency of our saliency estimation method, we trained a seperate model to estimate saliency score for each part. We manually labelled the saliency score for randomly selected 50 images(700 regions) in Tokyo 24/7 database. For each image, we use LabelMe~\cite{Russell2008} to label out the salient regions, and compute the saliency score of each region by the percentage of its salient part. 
+\par
+We report the Pearson correlation between the saliency score we computed with Eq~\eqref{eq-2} and that computed according to the manual labels. The Pearson correlation is $TBA$. 
+\subsection{Optimizing Geo-Localization}
+\par
+We applied our method introduced in Section~3.3 and compared the result with VGG-CNN-M model as a baseline. 
+\section{Conclusion and Future Work}

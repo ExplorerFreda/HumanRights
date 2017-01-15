@@ -1,0 +1,42 @@
+../../data/netvlad_pyramid_finetune_matchresult.json 1 39 0.0921985815603
+../../data/netvlad_pyramid_finetune_matchresult.json 2 66 0.156028368794
+../../data/netvlad_pyramid_finetune_matchresult.json 3 90 0.212765957447
+../../data/netvlad_pyramid_finetune_matchresult.json 4 109 0.25768321513
+../../data/netvlad_pyramid_finetune_matchresult.json 5 122 0.28841607565
+../../data/netvlad_pyramid_finetune_matchresult.json 10 206 0.486997635934
+../../data/netvlad_pyramid_finetune_matchresult.json 15 270 0.63829787234
+../../data/netvlad_pyramid_finetune_matchresult.json 20 314 0.74231678487
+../../data/netvlad_pyramid_finetune_matchresult.json 25 359 0.848699763593
+
+../../data/netvlad_single_finetune_matchresult.json 1 24 0.0567375886525
+../../data/netvlad_single_finetune_matchresult.json 2 43 0.101654846336
+../../data/netvlad_single_finetune_matchresult.json 3 61 0.144208037825
+../../data/netvlad_single_finetune_matchresult.json 4 76 0.179669030733
+../../data/netvlad_single_finetune_matchresult.json 5 86 0.203309692671
+../../data/netvlad_single_finetune_matchresult.json 10 139 0.328605200946
+../../data/netvlad_single_finetune_matchresult.json 15 197 0.465721040189
+../../data/netvlad_single_finetune_matchresult.json 20 246 0.581560283688
+../../data/netvlad_single_finetune_matchresult.json 25 289 0.683215130024
+
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 1 25 0.0591016548463
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 2 46 0.108747044917
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 3 67 0.158392434988
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 4 79 0.186761229314
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 5 89 0.210401891253
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 10 153 0.36170212766
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 15 200 0.472813238771
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 20 260 0.614657210402 
+../../data/netvlad_single_vgg-cnn-m_matchresult.json 25 300 0.709219858156
+
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 1 32 0.0756501182033
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 2 49 0.115839243499
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 3 66 0.156028368794
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 4 80 0.189125295508
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 5 98 0.231678486998
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 10 144 0.340425531915
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 15 197 0.465721040189
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 20 236 0.557919621749
+../../data/netvlad_pyramid_vgg-cnn-m_matchresult.json 25 288 0.68085106383
+
+
+423
