@@ -255,7 +255,7 @@ ID\# & Label & Saliency Score \\
 \par
 In order to show the efficiency of our saliency estimation method, we trained a separate model to estimate saliency score for each part. We manually labelled the saliency score for randomly selected 50 images (700 regions) in Tokyo 24/7 database. For each image, we use LabelMe~\cite{Russell2008} to label out the salient regions, and compute the saliency score of each region by the percentage of its salient part. 
 \par
-We report the Pearson correlation between the saliency score we computed with Eq~\eqref{eq-2} and that computed according to the manual labels. The Pearson correlation is $TBA$. 
+We report the Pearson correlation between the saliency score we computed with Eq~\eqref{eq-2} and that computed according to the manual labels. The Pearson correlation is $0.76259021$, showing that our estimated saliency score has strong relation with the ground truth saliency score. 
 
 
 
@@ -265,7 +265,7 @@ We report the Pearson correlation between the saliency score we computed with Eq
 We applied our method introduced in Section~3.3 and compared the result with VGG-CNN-M model as a baseline. In the following experiments, VGG-CNN-M-$m$ is the model released by Chatfield et al.~\cite{chatfield2014return}with the matching score $m$ computed by Eq~\eqref{eq-6}; VGG-CNN-M-$m_R$ is to estimate the saliency score using the VGG-CNN-M model, and then compute the match score between image $q$ and $d$ by Eq~\eqref{eq-7}; Ours-$m$ is to optimize the model with Algorithm~\ref{alg:joint} but use $m$ to measure the similarity of images for query; Ours-$m_R$ is to optimize the model with Algorithm~\ref{alg:joint} and measure the similarity of images utilizing $m_R$. 
 \subsubsection{Experiments on Boston Dataset}
 \par
-We labeled the ground-truth for 100 sample frames like those shown in Figure~\ref{fig:bostonvideo}, and computed mean average precision for the baseline model and our model. The result reported in Table~\ref{table:bostonresult} shows that our model has significantly improved the MAP on the geo-localization task. For the convenience of view, Table~\ref{table:bostoncase} shows some case study on this task. In CNN, we resize the frames into $224 \times 224$ square shape. Thus, we show the frames and database in such a square shape rather than rectangular in Figure~\ref{fig:bostonvideo}.
+We labeled the ground truth for 100 sample frames like those shown in Figure~\ref{fig:bostonvideo}, and computed mean average precision for the baseline model and our model. The result reported in Table~\ref{table:bostonresult} shows that our model has significantly improved the MAP on the geo-localization task. For the convenience of view, Table~\ref{table:bostoncase} shows some case study on this task. In CNN, we resize the frames into $224 \times 224$ square shape. Thus, we show the frames and database in such a square shape rather than rectangular in Figure~\ref{fig:bostonvideo}.
 \begin{table}[htbp]
 \begin{tabular}{|r|r|}
 \hline
