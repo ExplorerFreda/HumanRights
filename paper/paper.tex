@@ -7,76 +7,20 @@
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
 
-% Copyright
-%\setcopyright{none}
-%\setcopyright{acmcopyright}
-%\setcopyright{acmlicensed}
-%\setcopyright{rightsretained}
-%\setcopyright{usgov}
-%\setcopyright{usgovmixed}
-%\setcopyright{cagov}
-%\setcopyright{cagovmixed}
-
-
-% DOI
-%\acmDOI{10.475/123_4}
-
-% ISBN
-%\acmISBN{123-4567-24-567/08/06}
-
-%Conference
-%\acmConference[ICMR'17]{ACM Woodstock conference}{July 1997}{El Paso, Texas USA} 
-%\acmYear{1997}
-%\copyrightyear{2016}
-
-%\acmPrice{15.00}
-
-
 \begin{document}
 \title{A Joint Model for Saliency Estimation and Video Localization}
 
-\author{Haoyue Shi}
-\affiliation{
-  \institution{School of Electronics Engineering and Computer Science, Peking University}
-  \city{Beijing, China} 
-  \postcode{100871}
-}
-\email{hyshi@pku.edu.cn}
-
-\author{Jia Chen}
-\affiliation{
-  \institution{Language Technologies Institute, Carnegie Mellon University}
-  \city{Pittsburgh, PA, USA} 
-  \postcode{15213}
-}
-\email{jiac@cs.cmu.edu.cn}
-
-\author{Alexander G. Hauptmann}
-\affiliation{
-  \institution{Language Technologies Institute, Carnegie Mellon University}
-  \city{Pittsburgh, PA, USA} 
-  \postcode{15213}
-}
-\email{alex@cs.cmu.edu.cn}
-
-% The default list of authors is too long for headers}
 
 \begin{abstract}
 \par
-In this paper, we aim to determine the location of videos by matching the frames to a reference database, which contains plenty of geo-tagged images. We have demonstrated that salient regions (e.g. buildings) of a video frame (i.e. image) contains more information than non-salient regions (e.g. sky, roads and trees), so that the saliency score can perform as a guide in the matching procedure. In consideration of this fact, we propose a joint model based on a deep CNN architecture for both estimating saliency score and optimizing the matching between images guided by the saliency score in the training procedure. The experiments on Boston dataset and Tokyo 24/7 dataset have shown that our saliency aware method can help improve the accuracy of matching, and provide a reasonable explanation for the matched pairs. 
+In this paper, we aim to determine the location of videos by matching the frames to a reference database, which contains plenty of geo-tagged images. We have demonstrated that salient regions (e.g. buildings) of a video frame (i.e. image) contains more information than non-salient regions (e.g. sky, roads and trees), so that the saliency score can perform as a guide in the matching procedure. In consideration of this fact, we propose a joint model based on a deep CNN architecture for both estimating saliency score and optimizing the matching between images guided by the saliency score in the training procedure to solve the cross-domain image/video geo-localization problem. The experiments on Boston dataset and Tokyo 24/7 dataset have shown that our saliency aware method can help improve the accuracy of matching, and provide a reasonable explanation for the matched pairs. 
 \end{abstract}
-
-% \ccsdesc[300]{Specialized information retrieval~Image search} \\
-
-% We no longer use \terms command
-%\terms{Theory}
 
 \keywords{Image Localization, Video Localization, Deep Learning}
 
 \maketitle
 
 \input{samplebody-conf}
-
 
 \newpage
 \bibliographystyle{ACM-Reference-Format}
