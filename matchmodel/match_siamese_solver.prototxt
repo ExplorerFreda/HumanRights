@@ -1,4 +1,4 @@
-net: "match_siamese_train_test.prototxt"
+net: "match_siamese_train_val.prototxt"
 test_iter: 90
 test_interval: 200
 base_lr: 1e-6
