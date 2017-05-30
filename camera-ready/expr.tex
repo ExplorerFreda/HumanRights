@@ -2,12 +2,11 @@
 \label{sec:expr}
 
 In this section, we first give introduction to the two datasets we used to test our model; 
-and then introduced the details in our implementation in experiments; 
 next, we briefly introduce the evaluation metrics and baseline we applied.
 We report the experimental results on joint model based geo-localization and saliency estimation in the last two sub-sections, and give some analysis.
 
 \subsection{Datasets}
-We use two challenging datasets, Boston Marathon 2013\cite{chen2016boston} and Tokyo Time Machine~\cite{Arandjelovic16}. 
+We use two challenging datasets, Boston Marathon 2013\cite{chen2016boston} and Tokyo Time Machine~\cite{torii201524, Arandjelovic16}. 
 Table ~\ref{table:dataset} shows the summary of the two datasets we used.
 \subsubsection{Boston Dataset} 
 ~Chen et al.~\cite{chen2016boston} collected video clips which are related to the event of Boston Marathon bombing from the internet. 
@@ -52,42 +51,25 @@ Boston-test & 10,000 & 37 video clips
 \label{table:dataset}
 \end{table}
 
+\subsection{Evaluation Metrics and Baselines}
+We test the performance of our model with adopting two common metrics: mean average precision (MAP) and recall on top$N$:\\
+1. \emph{MAP} For a query image, the average precision $AveP$ of each query is computed. Then $MAP=\frac{\sum_{i=1}^{|Q|}AveP(i)}{|Q|}$, where $|Q|$ is the number of queries. This metric shows the general performance for a model. \\
+2. \emph{Recall on Top $N$.} We retrieve $N$ most similar images for each query. This metric is helpful to reveal the application value for a method, since we often retrieve top $N$ images for image retrieval tasks, like geo-localization.
 
-\subsection{Implementation Details}
-In the following experiments, we use Caffe~\cite{jia2014caffe} as the deep learning framework.
-
-We divide an image into a ``pyramid'', where the first layer is the image itself, the second layer contains $2 \times 2$ sub-images and the third layer contains $3 \times 3$ sub-images. 
-Thus, each image has 14 regions when we apply our saliency guided geo-localization method. The saliency score of each region is estimated separately. 
-Figure~\ref{fig:regions} shows how we generate regions for an image in the experiments. 
-
-\begin{figure}[htbp]
-\includegraphics[width=0.8\linewidth]{img/regions}
-\caption{The regions of an image in our experiments.}
-\label{fig:regions}
-\end{figure}
-
-To compare with Eq~\eqref{eq:simR}, we also report the experimental results with another metric of similarity
-\begin{equation} 
+We applied our method introduced in Section~\ref{sec:solution} with VGG-CNN-M model as a base CNN model and we introduce the following baselines: \\*
+VGG-CNN-M-$sim$: it calculates similarity 
+\begin{equation}
 sim(q, d) =  -||f(q) - f(d)||_2
 \label{eq:sim}
 \end{equation}
-which is directly the additional inverse of the Euclidean distance between two representative vectors in the feature space. 
-
-\subsection{Evaluation Metrics and Baselines}
-We test the performance of our model with adopting two common metrics: mean average precision (MAP) and recall on top$N$:\\
-1. \emph{MAP} For a query image, the average precision of an image retrieval task can be computed by $AveP=\frac{\sum_{k=1}^nP(k)\times rel(k)}{number~of~relevant~images}$, where $P(k)$ is the precision at cut-off $k$ in the list; $rel(k)$ is an indicator function equalling $1$ if the image at rank $k$ is a relevant image, $0$ otherwise. Then $MAP=\frac{\sum_{i=1}^{|Q|}AveP(i)}{|Q|}$, where $|Q|$ is the number of queries. This metric shows the general performance for a model. \\
-2. \emph{Recall on Top $N$.} We retrieve $N$ most similar images for each query. Therefore $Recall on top N = \frac{\sum_{i=1}^{|Q|} \#RetrievedRelevantImage(i)}{\sum_{i=1}^{|Q|} \# RelevantImage(i)}$, where $\#$ represents number. This metric is helpful to reveal the application value for a method, since we often retrieve top $N$ images for image retrieval tasks, like geo-localization.
-
-We applied our method introduced in Section~\ref{sec:solution} with VGG-CNN-M model as a base CNN model and we introduce the following baselines:
-\begin{itemize}
-\item VGG-CNN-M-$sim$: it calculates similarity $sim$ by Eq~\eqref{eq:sim} using the $fc7$ layer output of the model released by Chatfield et al.~\cite{chatfield2014return}. 
-\item VGG-CNN-M-$sim_R$: it estimates the saliency score using the VGG-CNN-M model, and then compute the similarity between image $q$ and $d$ by Eq~\eqref{eq:simR}. 
-\item IBFT-$sim$: it applies image-level based fine-tuning to the matching model, and use Eq~\eqref{eq:sim} as the metric of similarity. 
-\item JSEM-$sim_R$: it is the full joint saliency estimation and matching model with the similarity measurement Eq~\eqref{eq:simR} proposed in this paper. 
-\item Manually-labeled-$sim_R$: For Boston dataset, we also manually label the building contour in the image using LabelMe~\cite{Russell2008}. 
+using the $fc7$ layer output of the model released by Chatfield et al.~\cite{chatfield2014return}. \\*
+VGG-CNN-M-$sim_R$: it estimates the saliency score using the VGG-CNN-M model, and then compute the similarity between image $q$ and $d$ by Eq~\eqref{eq:simR}. \\*
+IBFT-$sim$: it applies image-level based fine-tuning to the matching model, and use Eq~\eqref{eq:sim} as the metric of similarity.\\*
+JSEM-$sim_R$: it is the full joint saliency estimation and matching model with the similarity measurement Eq~\eqref{eq:simR} proposed in this paper. \\*
+Manually-labeled-$sim_R$: For Boston dataset, we also manually label the building contour in the image using LabelMe~\cite{Russell2008}. \\*
 We treat building areas as foreground and other areas as background. 
 We manually set the saliency value of a region based on its intersection percentage with the foreground, and use this saliency value from additional building contour labeling in similarity measurement $sim_R$. It could be treated as a kind of upper bound. 
-\end{itemize}
+
 
 \subsection{Evaluation of Geo-Localization}
 \begin{table}[htbp]
@@ -128,7 +110,7 @@ JSEM-$sim_R$ & 1 & 1 & 1 & 12\\
 \label{table:bostoncase}
 \end{table}
 
-\begin{table*}[h]
+\begin{table*}[!t]
 \begin{tabular}{l|l|l|l|l|l|l|l|l|l}
 \textbf{Model} & \textbf{N = 1} & \textbf{N = 2}& \textbf{N = 3}& \textbf{N = 4}& \textbf{N = 5}& \textbf{N = 10}& \textbf{N = 15} & \textbf{N = 20} & \textbf{N = 25} \\
 \hline
@@ -142,7 +124,7 @@ JSEM-$sim_R$ & 16.12 & 27.96 & 39.80 & 51.39 & 58.44 & 78.84 & 84.63 & 89.67 & 9
 \end{table*} 
 
 
-\begin{table*}[h]
+\begin{table*}[!t]
 \begin{tabular}{l|l|l|l|l|l|l|l|l|l}
 \textbf{Model} & \textbf{N = 1} & \textbf{N = 2}& \textbf{N = 3}& \textbf{N = 4}& \textbf{N = 5}& \textbf{N = 10}& \textbf{N = 15} & \textbf{N = 20} & \textbf{N = 25} \\
 \hline
@@ -155,7 +137,7 @@ JSEM-$sim_R$ & 9.22 & 15.60 & 21.28 & 25.77& 28.84&48.70&63.83&74.23&84.87
 \label{table:netvlad-result}
 \end{table*} 
 
-\begin{figure*}[h]
+\begin{figure*}[!t]
 \includegraphics[width=0.9\textwidth]{img/salient}
 \caption{8 most salient regions(top) and 8 most non-salient regions in Tokyo TM database, with their saliency score.}
 \label{fig:saliency}
@@ -167,7 +149,7 @@ The result reported in Table~\ref{table:map} shows that our model has significan
 \emph{TokyoTM: }
 We also run experiments on the Tokyo TM dataset and show results in Table~\ref{table:map} and Table~\ref{table:netvlad-result}. 
 
-The experimental result had proved the efficiency of our model, showing that our model obtains the best recall for every $N$, and beats the baselines on the metric MAP. That is, our model not only performs well generally, but also has application value for real image retrieval tasks. However, it's interesting that the model IBFT-$sim$ performs  similar to VGG-CNN-M-$sim$ on Tokyo TM dataset. It suggests that fine-tuning based only on the limited training dataset could easily cause over-fitting. This also shows that saliency score is an important part to improve the performance of the model, and make the model more robust.
+The experimental result proves the effectiveness of our model, showing that our model obtains the best recall for every $N$, and beats the baselines on the metric MAP. That is, our model not only performs well generally, but also has application value for real image retrieval tasks. However, it's interesting that the model IBFT-$sim$ performs  similar to VGG-CNN-M-$sim$ on Tokyo TM dataset. It suggests that fine-tuning based only on the limited training dataset could easily cause over-fitting. This also shows that saliency score is an important part to improve the performance of the model, and make the model more robust.
 
 \subsection{Analysis of Learned Saliency}
 To give further supporting evidences for the effectiveness of our method, we analyze the learned saliency qualitatively and quantitatively. 
@@ -177,13 +159,12 @@ We applied the method introduced in Section~\ref{sec:solution} to estimate the s
 Figure~\ref{fig:saliency} shows the 8 most salient and 8 most non-salient regions together with their saliency scores from the Tokyo TM database. 
 The salient regions are all buildings with distinctive structure($a-h$) while the non-salient regions are images from road($i-k$), trees($m$ and $n$), sky($o$) and indistinctive building regions($l$ and $p$). 
 
-
-
 We also analyze the correlation between learned saliency with saliency calculate from manually labeled building contour in manually-labeled-$sim_R$, which could be treated as ground truth saliency score. 
 The Pearson correlation is $0.7625$, showing that our estimated saliency score has strong relation with the ground truth saliency score.
 Figure~\ref{fig:saliencycasestudy} shows the case study of our region based saliency estimation on two specific images. 
 
-\begin{figure}
-\includegraphics[width=0.73\linewidth]{img/case_study}
+
+\begin{figure}[H]
+\includegraphics[width=0.68\linewidth]{img/case_study}
 \caption{\label{fig:saliencycasestudy}Case study of region-based saliency estimation.}
 \end{figure}
